@@ -21,7 +21,8 @@ from telegram.ext import (
 )
 
 load_dotenv()
-TOKEN = os.getenv("BOT_TOKEN", "").strip()
+TOKEN = "8621763485:AAHFOPZEF4nfXcro2tXiMiMZEiKBu4wWug"
+
 OWNER_USERNAME = os.getenv("OWNER_USERNAME", "@PTWK_1XBetMM").strip()
 DB_PATH = os.getenv("DB_PATH", "moderation.db")
 WARN_LIMIT = int(os.getenv("WARN_LIMIT", "3"))

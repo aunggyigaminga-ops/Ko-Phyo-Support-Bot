@@ -21,8 +21,7 @@ from telegram.ext import (
 )
 
 load_dotenv()
-TOKEN = "8621763485:AAHFOPZEF4nfXcro2tXiMiMZEiKBu4wWug"
-
+TOKEN = os.getenv("BOT_TOKEN", "").strip()
 OWNER_USERNAME = os.getenv("OWNER_USERNAME", "@PTWK_1XBetMM").strip()
 DB_PATH = os.getenv("DB_PATH", "moderation.db")
 WARN_LIMIT = int(os.getenv("WARN_LIMIT", "3"))
@@ -170,6 +169,10 @@ async def moderate_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat = update.effective_chat
     user = msg.from_user
     if not msg or not user or chat.type == "private":
+        return
+    # Posts sent as a Channel or anonymous admin identity have sender_chat
+    # instead of a normal member identity. Treat them as approved admin posts.
+    if msg.sender_chat is not None:
         return
     try:
         member = await chat.get_member(user.id)
